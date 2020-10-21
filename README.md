@@ -13,7 +13,7 @@ https://openbase.io/js/fingerpose/documentation
 
 https://github.com/andypotato/fingerpose
 
-Projeto Handpose do autor annxingyuan:
+Projeto Handpose da empresa TensorFlow:
 
 https://github.com/tensorflow/tfjs-models/tree/master/handpose
 
