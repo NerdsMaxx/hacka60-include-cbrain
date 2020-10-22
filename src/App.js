@@ -1,36 +1,29 @@
-
-
+///////// NEW STUFF ADDED USE STATE
 import React, { useRef, useState } from "react";
+///////// NEW STUFF ADDED USE STATE
+
+// import logo from './logo.svg';
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import "./App.css";
 import { drawHand } from "./utilities";
+
+///////// NEW STUFF IMPORTS
 import * as fp from "fingerpose";
-
-
+import victory from "./victory.png";
+import thumbs_up from "./thumbs_up.png";
+///////// NEW STUFF IMPORTS
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   
-  const gestoLetraB = new fp.GestureDescription('Letra B');
 
-  //Polegar
-
-    gestoLetraB.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl,1.0);
-    gestoLetraB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalDown, 0.3);
-    gestoLetraB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUpRight, 1.0);
-    gestoLetraB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUpLeft, 1.0);
-
-    //Outros Dedos
-
-    for(let finger of [fp.Finger.Index, fp.Finger.Middle, fp.Finger.Ring, fp.Finger.Pinky]) {
-      gestoLetraB.addCurl(fp.finger, fp.FingerCurl.NoCurl, 1.0);
-      gestoLetraB.addDirection(fp.finger, fp.FingerDirection.VerticalUp, 1.0);
-      gestoLetraB.addDirection(fp.finger, fp.FingerDirection.VerticalRight, 0.7);
-      gestoLetraB.addDirection(fp.finger, fp.FingerDirection.VerticalLeft, 0.7);
-    }
+  ///////// NEW STUFF ADDED STATE HOOK
+  const [emoji, setEmoji] = useState(null);
+  const images = { thumbs_up: thumbs_up, victory: victory };
+  ///////// NEW STUFF ADDED STATE HOOK
 
   const runHandpose = async () => {
     const net = await handpose.load();
@@ -40,7 +33,6 @@ function App() {
       detect(net);
     }, 100);
   };
-
 
   const detect = async (net) => {
     // Check data is available
@@ -64,22 +56,33 @@ function App() {
 
       // Make Detections
       const hand = await net.estimateHands(video);
-      console.log(hand);
+      // console.log(hand);
 
+      ///////// NEW STUFF ADDED GESTURE HANDLING
 
-      if(hand.length >0){
+      if (hand.length > 0) {
         const GE = new fp.GestureEstimator([
-            fp.Gestures.ThumbsUpGesture,
-            fp.Gestures.VictoryGesture,   
-   
-               
-        ])
+          fp.Gestures.VictoryGesture,
+          fp.Gestures.ThumbsUpGesture,
+        ]);
+        const gesture = await GE.estimate(hand[0].landmarks, 4);
+        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
+          // console.log(gesture.gestures);
 
-          const gesture = await GE.estimate(hand[0].landmarks, 8);
-          console.log(gesture);
-
-       
+          const confidence = gesture.gestures.map(
+            (prediction) => prediction.confidence
+          );
+          const maxConfidence = confidence.indexOf(
+            Math.max.apply(null, confidence)
+          );
+          // console.log(gesture.gestures[maxConfidence].name);
+          setEmoji(gesture.gestures[maxConfidence].name);
+          console.log(emoji);
         }
+      }
+
+      ///////// NEW STUFF ADDED GESTURE HANDLING
+
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
       drawHand(hand, ctx);
@@ -120,6 +123,26 @@ function App() {
             height: 480,
           }}
         />
+        {/* NEW STUFF */}
+        {emoji !== null ? (
+          <img
+            src={images[emoji]}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 400,
+              bottom: 500,
+              right: 0,
+              textAlign: "center",
+              height: 100,
+            }}
+          />
+        ) : (
+          ""
+        )}
+
+        {/* NEW STUFF */}
       </header>
     </div>
   );
