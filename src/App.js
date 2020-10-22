@@ -13,6 +13,24 @@ import * as fp from "fingerpose";
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  
+  const gestoLetraB = new fp.GestureDescription('Letra B');
+
+  //Polegar
+
+    gestoLetraB.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl,1.0);
+    gestoLetraB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalDown, 0.3);
+    gestoLetraB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUpRight, 1.0);
+    gestoLetraB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUpLeft, 1.0);
+
+    //Outros Dedos
+
+    for(let finger of [fp.Finger.Index, fp.Finger.Middle, fp.Finger.Ring, fp.Finger.Pinky]) {
+      gestoLetraB.addCurl(fp.finger, fp.FingerCurl.NoCurl, 1.0);
+      gestoLetraB.addDirection(fp.finger, fp.FingerDirection.VerticalUp, 1.0);
+      gestoLetraB.addDirection(fp.finger, fp.FingerDirection.VerticalRight, 0.7);
+      gestoLetraB.addDirection(fp.finger, fp.FingerDirection.VerticalLeft, 0.7);
+    }
 
   const runHandpose = async () => {
     const net = await handpose.load();
