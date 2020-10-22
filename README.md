@@ -31,6 +31,27 @@ Projeto Handpose da empresa TensorFlow:
 
 https://github.com/tensorflow/tfjs-models/tree/master/handpose
 
+## Intrusção para rodar:
+
+Obs.: Foi testado apenas no Windows
+
+1) Instalar node.js
+https://nodejs.org/en/download/
+
+2)Abrir prompt de comando e usar comando:
+cd <colocar o caminho até a pasta hacka60-include-cbrain-master>
+
+Exemplo:
+C:\Users\guina\Downloads\hacka60-include-cbrain-master
+
+3) Usar os seguintes comandos:
+
+npm install react-webcam
+
+npm install @tensorflow/tfjs @tensorflow-models/handpose react-webcam
+
+npm run start
 
 
-
+E pronto, ele vai abrir o navegador, como o Google Chrome, e rodar a aplicação.
+É bom esperar um pouco para carregar, para aparecer as linhas na mão.
