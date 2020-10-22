@@ -35,7 +35,7 @@ https://github.com/tensorflow/tfjs-models/tree/master/handpose
 
 Obs.: Foi testado apenas no Windows
 
-1) Instalar node.js
+1)Instalar node.js
 https://nodejs.org/en/download/
 
 2)Abrir prompt de comando e usar comando:
@@ -44,7 +44,7 @@ cd <colocar o caminho até a pasta hacka60-include-cbrain-master>
 Exemplo:
 C:\Users\guina\Downloads\hacka60-include-cbrain-master
 
-3) Usar os seguintes comandos:
+3)Usar os seguintes comandos:
 
 npm install react-webcam
 
