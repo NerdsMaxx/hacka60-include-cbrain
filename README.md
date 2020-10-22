@@ -31,7 +31,7 @@ Projeto Handpose da empresa TensorFlow:
 
 https://github.com/tensorflow/tfjs-models/tree/master/handpose
 
-## Intrusção para rodar:
+## Instrução para rodar:
 
 Obs.: Foi testado apenas no Windows
 
