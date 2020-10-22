@@ -1,6 +1,6 @@
 # hacka60-include-cbrain - Intérprete virtual
 
-## Equipe: include (cbrain)
+## Equipe: #include (cbrain)
 ## Membros:
 Guilherme Henrique
 
